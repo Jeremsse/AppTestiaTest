@@ -12,7 +12,7 @@ function createWindow() {
   });
 
   mainWindow.loadURL(
-    url.parse({
+    url.format({
       pathname: path.join(__dirname, `/dist/index.html`),
       protocol: "file:",
       slashes: true,
