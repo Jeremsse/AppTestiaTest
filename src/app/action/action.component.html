@@ -1,0 +1,43 @@
+<mat-toolbar color="primary">
+  <span class="action">Report a default</span>
+</mat-toolbar>
+
+<div class="action-container">
+  <form [formGroup]="actionForm">
+    <mat-form-field appearance="fill" class="action-element">
+      <mat-label>Type of default</mat-label>
+      <mat-select
+        formControlName="defaultType"
+        placeholder="Choose type of default"
+      >
+        <mat-option value="delamination">Delamination</mat-option>
+        <mat-option value="porosity">Porosity</mat-option>
+        <mat-option value="inclusion">Inclusion</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="action-element">
+      <mat-label>Operator name</mat-label>
+      <input
+        matInput
+        formControlName="operatorName"
+        placeholder="Enter the name"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="action-element">
+      <mat-label>Remarks</mat-label>
+      <textarea
+        matInput
+        formControlName="remarks"
+        placeholder="Enter the remarks"
+      ></textarea>
+    </mat-form-field>
+
+    <div class="form-element">
+      <button mat-raised-button color="primary" class="button">
+        Submit Form
+      </button>
+    </div>
+  </form>
+</div>
