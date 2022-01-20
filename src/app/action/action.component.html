@@ -14,6 +14,7 @@
         <mat-option value="porosity">Porosity</mat-option>
         <mat-option value="inclusion">Inclusion</mat-option>
       </mat-select>
+      <mat-error>{{ errorDefaultTypeMessage() }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="action-element">
@@ -23,6 +24,7 @@
         formControlName="operatorName"
         placeholder="Enter the name"
       />
+      <mat-error>{{ errorOperatorNameMessage() }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="action-element">
@@ -34,9 +36,11 @@
       ></textarea>
     </mat-form-field>
 
-    <div class="form-element">
-      <button mat-raised-button color="primary" class="button">
-        Submit Form
+    <div class="action-button">
+      <button mat-raised-button color="primary">
+        Send report<mat-icon class="action-button-icon" aria-label="Send icon"
+          >send</mat-icon
+        >
       </button>
     </div>
   </form>
