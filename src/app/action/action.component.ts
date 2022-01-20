@@ -41,7 +41,7 @@ export class ActionComponent implements OnInit {
       : null;
   }
 
-  public sendReportSuccess(message: string) {
+  public snackBarMessage(message: string) {
     this.snackBar.open(message, undefined, {
       duration: 3000,
     });
@@ -54,9 +54,13 @@ export class ActionComponent implements OnInit {
   }
 
   public sendReportDefault() {
+    navigator.onLine
+      ? 'online'
+      : this.snackBarMessage('You are offline to submit the form ❌');
+
     if (this.actionForm.valid) {
       this.reportSvc.createReport(this.actionForm.value).subscribe(() => {
-        this.sendReportSuccess('Your report has been sent successfully ✔️');
+        this.snackBarMessage('Your report has been sent successfully ✔️');
       });
     }
   }
