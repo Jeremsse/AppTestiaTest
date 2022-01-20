@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ReportService } from 'src/shared/services/report.service';
 
 @Component({
   selector: 'app-action',
@@ -13,14 +10,22 @@ import {
 })
 export class ActionComponent implements OnInit {
   public actionForm: FormGroup = this.formBuilder.group({
-    defaultType: ['', Validators.required],
-    operatorName: ['', [Validators.required, Validators.pattern('[^0-9]+')]],
-    remarks: [''],
+    defaultType: [null, Validators.required],
+    operatorName: [null, [Validators.required, Validators.pattern('[^0-9]+')]],
+    remarks: [null],
   });
 
-  constructor(private formBuilder: FormBuilder) {}
+  public typeDefaults: Array<string> = [];
 
-  ngOnInit(): void {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private reportSvc: ReportService,
+    private snackBar: MatSnackBar
+  ) {}
+
+  ngOnInit(): void {
+    this.getTypeDefault();
+  }
 
   public errorDefaultTypeMessage() {
     return this.actionForm.controls['defaultType'].invalid
@@ -34,5 +39,25 @@ export class ActionComponent implements OnInit {
       : this.actionForm.controls['operatorName'].hasError('pattern')
       ? 'The field cannot contain numbers'
       : null;
+  }
+
+  public sendReportSuccess(message: string) {
+    this.snackBar.open(message, undefined, {
+      duration: 3000,
+    });
+  }
+
+  public getTypeDefault(): void {
+    this.reportSvc
+      .getTypeDefault()
+      .subscribe((data) => (this.typeDefaults = data));
+  }
+
+  public sendReportDefault() {
+    if (this.actionForm.valid) {
+      this.reportSvc.createReport(this.actionForm.value).subscribe(() => {
+        this.sendReportSuccess('Your report has been sent successfully ✔️');
+      });
+    }
   }
 }

@@ -10,9 +10,11 @@
         formControlName="defaultType"
         placeholder="Choose type of default"
       >
-        <mat-option value="delamination">Delamination</mat-option>
-        <mat-option value="porosity">Porosity</mat-option>
-        <mat-option value="inclusion">Inclusion</mat-option>
+        <mat-option
+          *ngFor="let typeDefault of typeDefaults"
+          value="{{ typeDefault }}"
+          >{{ typeDefault }}</mat-option
+        >
       </mat-select>
       <mat-error>{{ errorDefaultTypeMessage() }}</mat-error>
     </mat-form-field>
@@ -37,7 +39,7 @@
     </mat-form-field>
 
     <div class="action-button">
-      <button mat-raised-button color="primary">
+      <button mat-raised-button color="primary" (click)="sendReportDefault()">
         Send report<mat-icon class="action-button-icon" aria-label="Send icon"
           >send</mat-icon
         >
