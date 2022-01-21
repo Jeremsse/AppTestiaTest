@@ -1,4 +1,4 @@
-const BASE_URL = 'https://my-json-server.typicode.com/Jeremsse/AppTestiaTestDB';
+import { BASE_URL } from 'src/shared/constants/constant-global.constant';
 
 export const environment = {
   production: false,

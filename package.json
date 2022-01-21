@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "electron-forge start",
+    "ng-serve": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "start:electron": "ng build --base-href ./ && electron .",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "ng build --base-href && npx electron-forge import && electron-forge make"
   },
   "private": true,
   "dependencies": {

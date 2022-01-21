@@ -1,0 +1,11 @@
+<mat-card class="last-report-info">
+  <mat-card-title-group>
+    <mat-card-title>Last report</mat-card-title>
+    <mat-card-subtitle
+      >{{ lastReportInfo.operatorName }} -
+      {{ lastReportInfo.date }}</mat-card-subtitle
+    >
+  </mat-card-title-group>
+  <b>Type of default : {{ lastReportInfo.defaultType }}</b>
+  <mat-card-content> {{ lastReportInfo.remarks }}</mat-card-content>
+</mat-card>

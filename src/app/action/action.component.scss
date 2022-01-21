@@ -1,17 +1,21 @@
 .action {
+  &-network-message {
+    color: red;
+    background-color: #ff00002e;
+  }
   &-container {
-    padding: 10px;
+    padding: 0.6rem;
   }
   &-element {
-    padding: 5px 0px 25px 2px;
+    padding: 0.3rem 0rem 1.6rem 0.1rem;
     width: 100%;
   }
   &-button {
-    position: relative;
-    float: right;
+    display: block;
+    margin-left: auto;
     &-icon {
-      padding-left: 9px;
-      font-size: 23px;
+      padding-left: 0.5rem;
+      font-size: 1.4rem;
     }
   }
 }

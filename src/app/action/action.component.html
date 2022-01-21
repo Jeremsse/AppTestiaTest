@@ -2,10 +2,14 @@
   <span class="action">Report a default</span>
 </mat-toolbar>
 
+<p *ngIf="offlineMode" class="action-network-message">
+  WARNING : {{ offlineMessage }}
+</p>
+
 <div class="action-container">
   <form [formGroup]="actionForm">
-    <mat-form-field appearance="fill" class="action-element">
-      <mat-label>Type of default</mat-label>
+    <mat-form-field class="action-element">
+      <mat-label>Type of default *</mat-label>
       <mat-select
         formControlName="defaultType"
         placeholder="Choose type of default"
@@ -19,8 +23,8 @@
       <mat-error>{{ errorDefaultTypeMessage() }}</mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="action-element">
-      <mat-label>Operator name</mat-label>
+    <mat-form-field class="action-element">
+      <mat-label>Operator name *</mat-label>
       <input
         matInput
         formControlName="operatorName"
@@ -29,7 +33,7 @@
       <mat-error>{{ errorOperatorNameMessage() }}</mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="action-element">
+    <mat-form-field class="action-element">
       <mat-label>Remarks</mat-label>
       <textarea
         matInput
@@ -38,12 +42,21 @@
       ></textarea>
     </mat-form-field>
 
-    <div class="action-button">
-      <button mat-raised-button color="primary" (click)="sendReportDefault()">
+    <div>
+      <button
+        mat-raised-button
+        class="action-button"
+        color="primary"
+        [disabled]="buttonState"
+        (click)="sendReportDefault()"
+      >
         Send report<mat-icon class="action-button-icon" aria-label="Send icon"
           >send</mat-icon
         >
       </button>
     </div>
   </form>
+  <div *ngIf="lastReportView">
+    <app-report-card [lastReportInfo]="lastReportInfo"></app-report-card>
+  </div>
 </div>

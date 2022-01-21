@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Report } from 'src/shared/interfaces/report.interface';
 import { ReportService } from 'src/shared/services/report.service';
 
 @Component({
@@ -15,7 +16,21 @@ export class ActionComponent implements OnInit {
     remarks: [null],
   });
 
-  public typeDefaults: Array<string> = [];
+  public buttonState = true;
+  public offlineMode = false;
+  public offlineMessage = 'You are offline to submit the form ❌';
+  public lastReportView = false;
+  public lastReportInfo: Report = {
+    defaultType: '',
+    operatorName: '',
+    remarks: '',
+    date: new Date().toLocaleString('fr'),
+  };
+  public typeDefaults: Array<string> = [
+    'Delamination',
+    'Porosity',
+    'Inclusion',
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,7 +39,20 @@ export class ActionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getTypeDefault();
+    this.connectionStatus();
+
+    this.actionForm.valueChanges.subscribe(() => {
+      this.buttonState = this.actionForm.valid ? false : true;
+    });
+  }
+
+  public connectionStatus() {
+    const updateOnlineStatus = () => {
+      this.offlineMode = navigator.onLine ? false : true;
+    };
+
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
   }
 
   public errorDefaultTypeMessage() {
@@ -47,21 +75,18 @@ export class ActionComponent implements OnInit {
     });
   }
 
-  public getTypeDefault(): void {
-    this.reportSvc
-      .getTypeDefault()
-      .subscribe((data) => (this.typeDefaults = data));
-  }
-
   public sendReportDefault() {
-    navigator.onLine
-      ? 'online'
-      : this.snackBarMessage('You are offline to submit the form ❌');
-
-    if (this.actionForm.valid) {
-      this.reportSvc.createReport(this.actionForm.value).subscribe(() => {
+    if (this.actionForm.valid && navigator.onLine) {
+      this.reportSvc.createReport(this.actionForm.value).subscribe((data) => {
+        if (!data.remarks) {
+          data.remarks = 'No remarks';
+        }
+        this.lastReportInfo = data;
+        this.lastReportView = true;
         this.snackBarMessage('Your report has been sent successfully ✔️');
       });
+    } else if (!navigator.onLine) {
+      this.snackBarMessage(this.offlineMessage);
     }
   }
 }
