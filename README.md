@@ -12,7 +12,7 @@ Run `npm run start:electron` to launch the app wrapped in Electron. A window wil
 
 ## Build the Electron executable
 
-Run `npm run make` to build the electron app executable. This will build an `out/` folder at the root level of your project. Inside this folder is the executable. Please note that the `dist/` folder is needed to build the executable.
+Run `npm run make` to build the electron app executable. This will build an `out/` folder at the root level of your project. Inside this folder is the executable. Please note that the `dist/` folder is needed to build the executable (See "Build" section).
 
 ## Code scaffolding
 
